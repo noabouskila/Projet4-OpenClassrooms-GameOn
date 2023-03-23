@@ -68,38 +68,8 @@ img {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-}
 
 
-
- @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-} 
 
 main {
   font-size: 130%;
@@ -111,8 +81,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -166,7 +134,7 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(26, 39, 156, 0.4);
+  /* background-color: rgba(26, 39, 156, 0.4); */
 }
 
 .content {
@@ -193,7 +161,7 @@ label {
   font-size: 17px;
   font-weight: normal;
   display: inline-block;
-  margin-bottom: 11px;
+  margin-top: 11px;
 }
 input {
   padding: 8px;
@@ -232,6 +200,12 @@ input[data-error]::after {
     font-size: 0.4em;
     color: red;
 } */
+/* msg erreur input */
+.red{
+  font-size: 0.4em;
+  color: red;
+}
+
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -295,6 +269,16 @@ input[data-error]::after {
   transform: rotate(-55deg);
   left: 21%;
   top: 19%;
+}
+
+/* style du modal du msg envoyé apres validation */
+.msg-sent{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 400px;
+  padding-top: 30%;
 }
 .close {
   position: absolute;
@@ -462,6 +446,7 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  object-fit : cover;
 }
 .copyrights {
   color: #fe142f;
@@ -478,6 +463,9 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+
+
+
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;
@@ -515,7 +503,65 @@ footer {
     margin-top: 50px;
     text-align: center;
   }
+
 }
+@media screen and (max-width: 768px) {
+
+  .topnav a {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+@media screen and (max-width: 540px) {
+  
+  .topnav{
+    margin-top: 7%;
+  }
+
+  .topnav a {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+    /* margin-top: -15px; */
+  }
+  .bground{
+    margin-top : 15%;
+  }
+  .header-logo{
+    width: 60%;
+    margin-top: 7px;
+    margin-left: 20px;
+  }
+  img{
+    width: 100%;
+  }
+
+  .hero-headline {
+    font-size: 2.5rem;
+  }
+  .hero-text {
+    width: 89%;
+    font-size: 13px;
+    margin-top: 20px;
+  }
+
+ 
+} 
+
+ 
 
 @keyframes modalopen {
   from {
