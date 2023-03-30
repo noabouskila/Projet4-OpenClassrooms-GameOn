@@ -48,205 +48,77 @@ function closeModal() {
 }
 
 
-//6) Validation du formulaire au submit
-function validate(e){
-  // empeche le caractere par defaut du formulaire
-  e.preventDefault();
+//6) fonctions globale pour submit et blur
+function validateField(inputElement, nextElementSibling , errorMessage, validationFunction , isFocus) {
 
-  // gestion du l'input prenom
-  if(form.first.value == "" ) {
-    msgFirst.innerHTML = "Please provide your firstname!" ;
-    msgFirst.className ="red";
-    form.first.focus() ;
+  if (validationFunction(inputElement.value)) {
+   nextElementSibling.innerHTML = '';
+    return true;
+  } else {
+    nextElementSibling.innerHTML = errorMessage;
+    nextElementSibling.className = 'red';
+    console.log(inputElement)
+    if(isFocus!== true){
+      inputElement.focus();
+    }
     return false;
   }
-  // gestion du l'input prenom qui a moins de 2 caracteres
-  else if( form.first.value.length <2){
-    msgFirst.innerHTML = "Please provide more caracters!" ;
-    msgFirst.className ="red";
-    form.first.focus() ;
-    return false;
-  }
-  else{
-    msgFirst.innerHTML = "";
-  }
-
-  // nom 
-  if(form.last.value == "" ) {
-    msgLast.innerHTML = "Please provide your lastname!" ;
-    form.last.focus() ;
-    msgLast.className ="red";
-    return false;
-  }
-  // gestion du l'input nom qui a moins de 2 caracteres
-  else if( form.last.value.length <2){
-    msgLast.innerHTML = "Please provide more caracters!" ;
-    msgLast.className ="red";
-    return false;
-  }
-  else{
-    msgLast.innerHTML = "";
-  }
-
-  // email
-  if(form.email.value == "" ) {
-    msgEmail.innerHTML = "Please provide your email!" ;
-    form.email.focus() ;
-    msgEmail.className ="red";
-    return false; 
-  }
-  // gestion du l'input email qui n'a pas une syntaxe valide
-  else if(reg.test(form.email.value) == false){
-    msgEmail.innerHTML = "Please provide a valid email adress!" ;
-    msgEmail.className ="red";
-    return false; 
-  }
-  else{
-    msgEmail.innerHTML = "";
-  }
-
-  // birthdate
-  if(form.birthdate.value == "" ) {
-    msgBirthdate.innerHTML = "Please provide your birthdate!" ;
-    form.birthdate.focus() ;
-    msgBirthdate.className ="red";
-    return false;
-  }else{
-    msgBirthdate.innerHTML = "";
-  }
-
-  // quantity
-  if(form.quantity.value == false) {
-    msgQuantity.innerHTML = "Please provide your quantity!" ;
-    form.quantity.focus() ;
-    msgQuantity.className ="red";
-    return false;
-  }
-  else{
-    msgQuantity.innerHTML = "";
-  }
-
-  // gestion de l'input location
-  if(form.location.value == "" ) {
-    msgLocation.innerHTML = "Please provide your location!" ;
-    msgLocation.className ="red";
-    return false;
-  }else if(form.location.value == true){
-    msgLocation.style.display = "none";
-  }
-
-  // envoi de la reponse du formulaire 
-  form.style.display = "none";
-  msgSent.style.display ="flex";
-  
-  // Réinitalisation du formualaire
-  form.reset();
-  return true;
 }
 
-//7) soumission du formulaire
-form.addEventListener("submit", validate);
+//7) fonctions de verification des champs
+function validateFirstName() {
+  return form.first.value !== '' && form.first.value.length >= 2;
+}
+function validateLastName() {
+  return form.last.value !== '' && form.last.value.length >= 2;
+}
+function validateEmail() {
+  return form.email.value !== '' && reg.test(form.email.value);  
+}
+function validateBirthdate() {
+  return form.birthdate.value !== '' 
+}
+function validateQuantity() {
+  return form.quantity.value !== '' 
+}
+function validateLocation(){
+  return form.location.value !== '';
+}
+function validateCgu(){
+  return form.cgu.checked
+}
 
-///////////////////////////////////////////////////////
+ 
+//8) BLUR
+// verification champs firstname
+form.first.addEventListener('blur', function(e) {
+  validateField(form.first,msgFirst,
+  'Please provide at least 2 caracters for your firstname!', validateFirstName);
+});
+// verification champs lastname
+form.last.addEventListener('blur', function() {
+  validateField(form.last,msgLast, 
+  'Please provide at least 2caracters for your lastname!', validateLastName);
+});
+// verification champs birthdate
+form.email.addEventListener('blur', function() {
+  validateField(form.email, msgEmail, 
+  'Please provide a valid email adress!', validateEmail);
+});
+// verification champs birthdate
+form.birthdate.addEventListener('blur', function() {
+  validateField(form.birthdate,msgBirthdate, 
+  'Please provide your birthdate!', validateBirthdate);
+});
+// verification champs quantity
+form.quantity.addEventListener('blur', function() {
+  validateField(form.quantity,msgQuantity, 
+  'Please provide your quantity!', validateQuantity);
+});
 
-//8) Vérification onBLur / onChange
-form.first.addEventListener("blur", ()=>{
-
+// verification champs location  : onChange
+const boutonsRadio = document.querySelectorAll('input[type="radio"]');
   
-  // gestion du l'input prenom
-  if(form.first.value == "" ) {
-    msgFirst.innerHTML = "Please provide your firstname!" ;
-    msgFirst.className ="red";
-    form.first.focus() ;
-    return false;
-  }
-  // gestion du l'input prenom qui a moins de 2 caracteres
-  else if( form.first.value.length <2){
-    msgFirst.innerHTML = "Please provide more caracters!" ;
-    msgFirst.className ="red";
-    form.first.focus() ;
-    return false;
-  }
-  else{
-    msgFirst.innerHTML = "";
-    return true ; 
-  }
-});
-
-// gestion du l'input nom
-form.last.addEventListener("blur", ()=>{
-
-  if(form.last.value == "" ) {
-    msgLast.innerHTML = "Please provide your lastname!" ;
-    form.last.focus() ;
-    msgLast.className ="red";
-    return false;
-  }
-  // gestion du l'input nom qui a moins de 2 caracteres
-  else if( form.last.value.length <2){
-      msgLast.innerHTML = "Please provide more caracters!" ;
-      msgLast.className ="red";
-      return false;
-  }
-  else{
-    msgLast.innerHTML = "";
-    return true ; 
-  }
-});
-
-// gestion du l'input email
-form.email.addEventListener("blur", ()=>{
-
-  if(form.email.value == "" ) {
-    msgEmail.innerHTML = "Please provide your email!" ;
-    form.email.focus() ;
-    msgEmail.className ="red";
-    return false; 
-  }
-  // gestion du l'input email qui n'a pas une syntaxe valide
-  else if(reg.test(form.email.value) == false){
-    msgEmail.innerHTML = "Please provide a valid email adress!" ;
-    msgEmail.className ="red";
-    return false; 
-  }
-  else{
-    msgEmail.innerHTML = "";
-    return true ; 
-  }
-});
-
-// gestion du l'input date de naissance 
-form.birthdate.addEventListener("blur", ()=>{
-
-  if(form.birthdate.value == "" ) {
-    msgBirthdate.innerHTML = "Please provide your birthdate!" ;
-    form.birthdate.focus() ;
-    msgBirthdate.className ="red";
-    return false;
-  }else{
-    msgBirthdate.innerHTML = "";
-    return true ; 
-  }
-});
-
-// gestion du l'input quantite
-form.quantity.addEventListener("blur", ()=>{
-
-  if(form.quantity.value == false) {
-    msgQuantity.innerHTML = "Please provide your quantity!" ;
-    form.quantity.focus() ;
-    msgQuantity.className ="red";
-    return false;
-  }
-  else{
-    msgQuantity.innerHTML = "";
-    return true ; 
-  }
-});
-
-// Gestion du checkbox location 
- const boutonsRadio = document.querySelectorAll('input[type="radio"]');
-
 // Parcourir tous les boutons radio pour vérifier si l'un d'eux est sélectionné
 for (let i = 0; i < boutonsRadio.length; i++) {
   boutonsRadio[i].addEventListener("change", ()=>{
@@ -254,17 +126,55 @@ for (let i = 0; i < boutonsRadio.length; i++) {
   })
 }
 
+// verification champs cgu
+form.cgu.addEventListener('click', function() {
+  validateField(form.cgu ,msgCGU, 
+  'Please click the CGU!', validateCgu);
+});
 
-// gestion de la checkbox des cgu
-form.cgu.addEventListener("click", ()=>{
-  if(form.cgu.checked == false ) {
-    msgCGU.innerHTML = "Please check the CGU !" ;
-    form.cgu.focus() ;
-    msgCGU.className ="red";
-    return false;
-  }else{
-    msgCGU.innerHTML = "";
-    return true ; 
+///////////////////////////////////////////////////
+
+//9) SUBMIT 
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  let isValid = true;
+
+  // verification champs firstname
+  isValid &= validateField(form.first, msgFirst,
+  'Please provide your firstname!', validateFirstName);
+
+  // verification champs lastname
+  isValid &= validateField(form.last,msgLast,
+  'Please provide your lastname!',  validateLastName);
+
+  // verification champs email
+  isValid &= validateField(form.email, msgEmail,
+  'Please provide a valid email adress!', validateEmail);
+
+  // verification champs birthdate
+  isValid &= validateField(form.birthdate,msgBirthdate ,
+  'Please provide your birthdate!', validateBirthdate);
+
+  // verification champs quantity
+  isValid &= validateField(form.quantity, msgQuantity,
+  'Please provide your quantity!', validateQuantity);
+
+  // verification champs location
+  isValid &= validateField(form.location, msgLocation,
+  'Please provide your location!', validateLocation , true);
+
+  // verifivation champs cgu
+  isValid &= validateField(form.cgu, msgCGU,
+    'Please check the CGU!', validateCgu);
+
+
+  // si isValid = true : disparaitre le formulaire et afficher le msg de remerciement
+  //  puis  reset les données du formulaire
+  if (isValid) {
+    form.style.display = 'none';
+    msgSent.style.display = 'flex';
+    form.reset();
   }
 });
 

@@ -507,6 +507,10 @@ footer {
 }
 @media screen and (max-width: 768px) {
 
+   .icon i{
+    color: red;
+
+   }
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
