@@ -27,7 +27,8 @@ const closeMsgSent =document.querySelector('.close-msg-sent')
 
 //3) EXPRESSIONS REGULIERES pour la validation du mail et de la date
 var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
-var regDate = new RegExp("^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$",'i');
+var regDate = new RegExp('^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$','i');
+// const regDate = new RegExp('^\\\\d{2}/\\\\d{2}/\\\\d{4}$');
 
 
 
@@ -79,7 +80,8 @@ function validateEmail() {
 }
 // AJOUT VERIF TYPE DATE APRES EVAL
 function validateBirthdate() {
-  return form.birthdate.value !== '' && regDate.test(form.birthdate.value);   ;
+  return form.birthdate.value !== '' && regDate.test(form.birthdate.value);  
+  console.log() 
 }
 // AJOUT VERIF TYPE NUMBER QUANTITE APRES EVAL
 function validateQuantity() {
