@@ -25,8 +25,10 @@ const msgSent = document.querySelector(".msg-sent");
 const closeMsgSent =document.querySelector('.close-msg-sent')
 
 
-//3) EXPRESSIONS REGULIERES pour la validation du mail
-var reg = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
+//3) EXPRESSIONS REGULIERES pour la validation du mail et de la date
+var regMail = new RegExp('^[0-9a-z._-]+@{1}[0-9a-z.-]{2,}[.]{1}[a-z]{2,5}$','i');
+var regDate = new RegExp("^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$",'i');
+
 
 
 //4) Lancer la modale au click
@@ -73,13 +75,15 @@ function validateLastName() {
   return form.last.value !== '' && form.last.value.length >= 2;
 }
 function validateEmail() {
-  return form.email.value !== '' && reg.test(form.email.value);  
+  return form.email.value !== '' && regMail.test(form.email.value);  
 }
+// AJOUT VERIF TYPE DATE APRES EVAL
 function validateBirthdate() {
-  return form.birthdate.value !== '' ;
+  return form.birthdate.value !== '' && regDate.test(form.birthdate.value);   ;
 }
+// AJOUT VERIF TYPE NUMBER QUANTITE APRES EVAL
 function validateQuantity() {
-  return form.quantity.value !== '' ;
+  return form.quantity.value !== '' && !isNaN(form.quantity.value);
 }
 function validateLocation(){
   return form.location.value !== '';
@@ -108,12 +112,12 @@ form.email.addEventListener('blur', function() {
 // verification champs birthdate
 form.birthdate.addEventListener('blur', function() {
   validateField(form.birthdate,msgBirthdate, 
-  'Please provide your birthdate!', validateBirthdate);
+  'Please provide a valid birthdate!', validateBirthdate);
 });
 // verification champs quantity
 form.quantity.addEventListener('blur', function() {
   validateField(form.quantity,msgQuantity, 
-  'Please provide your quantity!', validateQuantity);
+  'Please provide a valid quantity!', validateQuantity);
 });
 
 // verification champs location  : onChange
@@ -141,7 +145,6 @@ form.addEventListener('submit', function(e) {
   // initialise isValid a true pour effectuer une operation logique entre isValid 
   //et validateField : isValid sera true si seulement la function validateField est 
   // egale a true  
-  
   let isValid = true;
 
   // verification champs firstname
@@ -158,11 +161,11 @@ form.addEventListener('submit', function(e) {
 
   // verification champs birthdate
   isValid &= validateField(form.birthdate,msgBirthdate ,
-  'Please provide your birthdate!', validateBirthdate);
+  'Please provide a valid birthdate!', validateBirthdate);
 
   // verification champs quantity
   isValid &= validateField(form.quantity, msgQuantity,
-  'Please provide your quantity!', validateQuantity);
+  'Please provide a valid quantity!', validateQuantity);
 
   // verification champs location
   isValid &= validateField(form.location, msgLocation,
