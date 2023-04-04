@@ -65,7 +65,7 @@ function validateField(inputElement, nextElementSibling , errorMessage, validati
   }
 }
 
-//7) fonctions de verification des champs
+//7) fonctions de verification des champs (validationFunction)
 function validateFirstName() {
   return form.first.value !== '' && form.first.value.length >= 2;
 }
@@ -76,10 +76,10 @@ function validateEmail() {
   return form.email.value !== '' && reg.test(form.email.value);  
 }
 function validateBirthdate() {
-  return form.birthdate.value !== '' 
+  return form.birthdate.value !== '' ;
 }
 function validateQuantity() {
-  return form.quantity.value !== '' 
+  return form.quantity.value !== '' ;
 }
 function validateLocation(){
   return form.location.value !== '';
@@ -91,7 +91,7 @@ function validateCgu(){
  
 //8) BLUR
 // verification champs firstname
-form.first.addEventListener('blur', function(e) {
+form.first.addEventListener('blur', function() {
   validateField(form.first,msgFirst,
   'Please provide at least 2 caracters for your firstname!', validateFirstName);
 });
@@ -137,7 +137,11 @@ form.cgu.addEventListener('click', function() {
 //9) SUBMIT 
 form.addEventListener('submit', function(e) {
   e.preventDefault();
-
+ 
+  // initialise isValid a true pour effectuer une operation logique entre isValid 
+  //et validateField : isValid sera true si seulement la function validateField est 
+  // egale a true  
+  
   let isValid = true;
 
   // verification champs firstname
